@@ -18,6 +18,24 @@ def index(request, _):
 
     return render(request, 'index.html')
 
+def bmi_calculator(request, _):
+    """
+    获取BMI 不需要存储就不要调用model
+    """
+    height = 1.6  #m
+    weight = 59.5 #kg
+    bmi = height / (weight^2)
+    #初始化默认
+    rsp = JsonResponse({'code': -1, 'errorMsg': ''}, json_dumps_params={'ensure_ascii': False})
+    #执行逻辑
+    if request.method == 'GET' or request.method == 'get':
+        rsp = JsonResponse({'code': 0, 'data': bmi},
+                        json_dumps_params={'ensure_ascii': False})
+    else:
+        rsp = JsonResponse({'code': -2, 'errorMsg': '请求方式错误'},
+                            json_dumps_params={'ensure_ascii': False})
+        
+
 
 def counter(request, _):
     """
