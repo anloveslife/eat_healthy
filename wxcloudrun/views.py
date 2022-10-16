@@ -34,6 +34,7 @@ def bmi_calculator(request, _):
     else:
         rsp = JsonResponse({'code': -2, 'errorMsg': '请求方式错误'},
                             json_dumps_params={'ensure_ascii': False})
+    return rsp
         
 
 
