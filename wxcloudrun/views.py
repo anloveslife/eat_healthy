@@ -24,7 +24,7 @@ def bmi_calculator(request, _):
     """
     height = 1.6  #m
     weight = 59.5 #kg
-    bmi = height / (weight^2)
+    bmi = height / (weight**2)
     #初始化默认
     rsp = JsonResponse({'code': -1, 'errorMsg': ''}, json_dumps_params={'ensure_ascii': False})
     #执行逻辑
