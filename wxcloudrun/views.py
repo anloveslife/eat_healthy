@@ -24,18 +24,37 @@ def bmi_calculator(request, _):
     """
     height = 1.6  #m
     weight = 59.5 #kg
-    bmi = height / (weight**2)
     #初始化默认
     rsp = JsonResponse({'code': -1, 'errorMsg': ''}, json_dumps_params={'ensure_ascii': False})
     #执行逻辑
     if request.method == 'GET' or request.method == 'get':
-        rsp = JsonResponse({'code': 0, 'data': bmi},
-                        json_dumps_params={'ensure_ascii': False})
+        rsp = cal_bmi(height, weight)
     else:
         rsp = JsonResponse({'code': -2, 'errorMsg': '请求方式错误'},
                             json_dumps_params={'ensure_ascii': False})
     return rsp
-        
+
+def cal_bmi(height, weight):
+    """
+    计算bmi
+    """    
+    bmi = weight / (height**2)
+    bmi_class = ""
+    if bmi < 18.4:
+        bmi_class = "偏瘦"
+    elif bmi < 24.0:
+        bmi_class = "正常"
+    elif bmi < 28.0:
+        bmi_class = "过重"
+    else:
+        bmi_class = "肥胖"
+    if bmi_class:
+        return JsonResponse({'code': 0, 'bmi': bmi, 'bmi_class': bmi_class},
+                    json_dumps_params={'ensure_ascii': False})
+    else:
+        return JsonResponse({'code': -10, 'bmi': -1, 'bmi_class': bmi_class},
+                    json_dumps_params={'ensure_ascii': False})
+         
 
 
 def counter(request, _):
