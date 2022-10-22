@@ -22,13 +22,15 @@ def bmi_calculator(request, _):
     """
     获取BMI 不需要存储就不要调用model
     """
-    height = 1.6  #m
-    weight = 59.5 #kg
+    height = request.GET.get('height') #m
+    weight = request.GET.get('weight') #kg
     #初始化默认
     rsp = JsonResponse({'code': -1, 'errorMsg': ''}, json_dumps_params={'ensure_ascii': False})
+    if not height or not weight:
+        return rsp
     #执行逻辑
     if request.method == 'GET' or request.method == 'get':
-        rsp = cal_bmi(height, weight)
+        rsp = cal_bmi(float(height), float(weight))
     else:
         rsp = JsonResponse({'code': -2, 'errorMsg': '请求方式错误'},
                             json_dumps_params={'ensure_ascii': False})
